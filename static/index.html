@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubble Pop — Лови момент</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#" data-screen="home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>
+          <strong>BUBBLE</strong><b>POP</b>
+        </span>
+      </a>
+      <div class="top-actions">
+        <span class="db-status" id="dbStatus"><i></i> проверка соединения</span>
+        <button class="ghost-btn" id="leadersTop">Таблица лидеров</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- HOME -->
+      <section class="screen active" id="home">
+        <div class="home-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">АРКАДА · 01</p>
+            <h1>Лови<br><em>момент.</em></h1>
+            <p class="hero-sub">
+              Пузыри появляются на поле, время идёт.<br>
+              Успей собрать как можно больше очков.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn" id="startBtn"><span>▶</span> Начать игру</button>
+              <button class="secondary-btn" id="leadersBtn">🏆  Таблица лидеров</button>
+            </div>
+            <div class="mini-stats">
+              <div><b>+10</b><span>за пузырь</span></div>
+              <div><b>3</b><span>уровня</span></div>
+              <div><b>∞</b><span>попыток</span></div>
+            </div>
+          </div>
+
+          <div class="hero-art">
+            <div class="orbit orbit-1"></div>
+            <div class="orbit orbit-2"></div>
+            <div class="bubble-art bubble-pink"><i></i></div>
+            <div class="bubble-art bubble-blue"><i></i></div>
+            <div class="bubble-art bubble-purple"><i></i></div>
+            <div class="bubble-art bubble-small"><i></i></div>
+            <div class="art-card">
+              <span>ТВОЙ РЕКОРД</span>
+              <strong id="homeBest">—</strong>
+              <small>очков</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETUP -->
+      <section class="screen" id="setup">
+        <div class="center-card setup-card">
+          <p class="eyebrow">НОВЫЙ РАУНД</p>
+          <h2>Готова к охоте?</h2>
+          <p class="muted">Настрой игру и начинай.</p>
+
+          <label class="field-label" for="playerName">Имя игрока</label>
+          <input id="playerName" class="text-input" maxlength="100" value="Игрок" autocomplete="off">
+
+          <label class="field-label">Сложность</label>
+          <div class="difficulty-grid">
+            <button class="difficulty" data-difficulty="Легко">
+              <span class="diff-icon easy">●</span><strong>Легко</strong>
+              <small>60 сек · крупные</small>
+            </button>
+            <button class="difficulty selected" data-difficulty="Средний">
+              <span class="diff-icon medium">●</span><strong>Средний</strong>
+              <small>45 сек · стандарт</small>
+            </button>
+            <button class="difficulty" data-difficulty="Сложно">
+              <span class="diff-icon hard">●</span><strong>Сложно</strong>
+              <small>30 сек · быстрые</small>
+            </button>
+          </div>
+
+          <button class="primary-btn wide" id="playBtn">▶  Начать игру</button>
+          <button class="link-btn" data-screen="home">← Вернуться назад</button>
+        </div>
+      </section>
+
+      <!-- GAME -->
+      <section class="screen game-screen" id="game">
+        <div class="game-hud">
+          <div class="hud-user"><div class="avatar">●</div><div><small>ИГРОК</small><strong id="gameName">Игрок</strong></div></div>
+          <div class="hud-center"><small>ВРЕМЯ</small><strong id="timer">00:45</strong></div>
+          <div class="hud-score"><small>ОЧКИ</small><strong id="score">0</strong></div>
+        </div>
+        <div class="playfield" id="playfield">
+          <div class="field-hint" id="fieldHint">Лови пузыри!</div>
+        </div>
+        <div class="game-footer">Каждое попадание <b>+10</b> · Не промахнись</div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="screen" id="result">
+        <div class="center-card result-card">
+          <div class="result-badge">✦</div>
+          <p class="eyebrow">РАУНД ЗАВЕРШЁН</p>
+          <h2 id="resultTitle">Отличная игра!</h2>
+          <p class="muted" id="resultPlayer">Игрок · Средний</p>
+          <div class="result-score"><strong id="resultScore">0</strong><span>ОЧКОВ</span></div>
+          <div class="result-actions">
+            <button class="primary-btn wide" id="againBtn">↻  Играть снова</button>
+            <button class="secondary-btn wide" id="resultLeadersBtn">🏆  Таблица лидеров</button>
+          </div>
+          <p class="save-note" id="saveNote">✓ Результат сохранён</p>
+        </div>
+      </section>
+
+      <!-- LEADERBOARD -->
+      <section class="screen" id="leaderboard">
+        <div class="leaders-wrap">
+          <div class="leaders-heading">
+            <div><p class="eyebrow">РЕКОРДЫ</p><h2>Таблица лидеров</h2><p class="muted">Кто сегодня был быстрее всех?</p></div>
+            <button class="secondary-btn" data-screen="home">← На главную</button>
+          </div>
+          <div class="leader-table">
+            <div class="table-head"><span>#</span><span>ИГРОК</span><span>ОЧКИ</span><span>СЛОЖНОСТЬ</span><span>ДАТА</span></div>
+            <div id="leaderRows"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
