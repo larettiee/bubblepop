@@ -66,3 +66,24 @@ def get_scores(limit: int = 10):
         }
         for r in rows
     ]
+    
+def get_statistics():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*) AS total_games,
+               COALESCE(MAX(score), 0) AS best_score
+        FROM scores
+    """)
+
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return {
+        "total_games": result[0],
+        "best_score": result[1]
+    }    
+

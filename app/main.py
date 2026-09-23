@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from app.db import connect, get_scores, init_db, save_score
+from app.db import connect, get_scores, init_db, save_score, get_statistics
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -81,3 +81,7 @@ def create_score(payload: ScoreIn):
     except Exception as exc:
         print(f"[SAVE SCORE ERROR] {type(exc).__name__}: {exc}")
         raise HTTPException(status_code=503, detail="Database is unavailable") from exc
+        
+@app.get("/api/scores/stats")
+def scores_stats():
+    return get_statistics()
